@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Society.xsd">
+    <time-unit>
+        seconds
+    </time-unit>
+    <cells>
+        <cell>
+            <symbol>A</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>black</content>
+            </fill>
+            <action>gameoflife.GameLife</action>
+        </cell>
+        <cell>
+            <symbol>D</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>white</content>
+            </fill>
+            <action>gameoflife.GameLife</action>
+        </cell>
+    </cells>
+    <state>
+        <type>RANDOM</type>
+        <distribution>
+            <weight cell="A">.2</weight>
+            <weight cell="D">.8</weight>
+        </distribution>
+    </state>
+
+</game>

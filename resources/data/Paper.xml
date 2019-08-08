@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Society.xsd">
+	<cells>
+		<cell>
+			<symbol>X</symbol>
+			<fill>
+				<type>COLOR</type>
+				<content>blue</content>
+			</fill>
+			<action>paper.Paper</action>
+		</cell>
+		<cell>
+			<symbol>O</symbol>
+			<fill>
+				<type>COLOR</type>
+				<content>green</content>
+			</fill>
+			<action>paper.Paper</action>
+		</cell>
+		<cell>
+			<symbol>B</symbol>
+			<fill>
+				<type>COLOR</type>
+				<content>red</content>
+			</fill>
+			<action>paper.Paper</action>
+		</cell>
+	</cells>
+	<state>
+		<type>RANDOM</type>
+		<distribution>
+			<weight cell="0">0.01</weight>
+			<weight cell="O">0.33</weight>
+			<weight cell="X">0.33</weight>
+			<weight cell="B">0.33</weight>
+		</distribution>
+	</state></game>

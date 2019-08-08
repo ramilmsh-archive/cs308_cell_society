@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Society.xsd">
+    <time-unit>
+        seconds
+    </time-unit>
+    <cells>
+        <cell>
+            <symbol>X</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>red</content>
+            </fill>
+            <action>wator.Predator</action>
+        </cell>
+        <cell>
+            <symbol>O</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>blue</content>
+            </fill>
+            <action>wator.Prey</action>
+        </cell>
+    </cells>
+    <state>
+        <type>RANDOM</type>
+        <distribution>
+            <weight cell="0">.5</weight>
+            <weight cell="X">.3</weight>
+            <weight cell="O">.2</weight>
+        </distribution>
+    </state>
+</game>

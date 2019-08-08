@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="game">
+        <xs:annotation>
+            <xs:appinfo>
+                Cell Society
+            </xs:appinfo>
+            <xs:documentation>
+                This schema defines initial configuration for a generalized implementation of Cell Society
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:complexType>
+            <xs:sequence>
+
+                <!--Time configuration-->
+
+                <xs:element name="time-unit" type="xs:string" default="seconds" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            Time unit
+                        </xs:appinfo>
+                        <xs:documentation xml:lang="en">
+                            Defines default time unit for game
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="step" type="xs:float" default="1.0" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            Step
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Defines step size in "time-unit"s
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="finite" type="xs:boolean" default="false" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>Time line</xs:appinfo>
+                        <xs:documentation>
+                            Defines whether the game has finite time-line.
+                            If true, must exist end-time
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <xs:element name="end-time" type="xs:float" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            End time
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Defines the end time for a finite time line
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+
+                <!--util.Cell definition-->
+
+                <xs:element name="cells">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            Cell types
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Defines exiting cell types
+                        </xs:documentation>
+                    </xs:annotation>
+
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="cell" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        Cell type
+                                    </xs:appinfo>
+                                    <xs:documentation>
+                                        Defines properties of a cell type
+                                    </xs:documentation>
+                                </xs:annotation>
+
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="symbol">
+                                            <xs:simpleType>
+                                                <xs:annotation>
+                                                    <xs:appinfo>Symbol</xs:appinfo>
+                                                    <xs:documentation>
+                                                        Symbol to denote cell on the grid
+                                                    </xs:documentation>
+                                                </xs:annotation>
+
+                                                <xs:restriction>
+                                                    <xs:length fixed="true" value="1"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+
+                                        <xs:element name="fill" maxOccurs="3">
+                                            <xs:annotation>
+                                                <xs:appinfo>
+                                                    Fill
+                                                </xs:appinfo>
+                                                <xs:documentation>
+                                                    Defines visual representation of the cell
+                                                </xs:documentation>
+                                            </xs:annotation>
+
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="type">
+                                                        <xs:simpleType>
+                                                            <xs:annotation>
+                                                                <xs:appinfo>
+
+                                                                </xs:appinfo>
+                                                            </xs:annotation>
+
+                                                            <xs:restriction>
+                                                                <xs:enumeration value="SYMBOL"/>
+                                                                <xs:enumeration value="COLOR"/>
+                                                                <xs:enumeration value="IMAGE"/>
+                                                            </xs:restriction>
+                                                        </xs:simpleType>
+                                                    </xs:element>
+
+                                                    <xs:element name="content">
+                                                        <xs:annotation>
+                                                            <xs:appinfo>Content</xs:appinfo>
+                                                            <xs:documentation>
+                                                                Cell fill:
+                                                                - for symbol: char
+                                                                - for color: (hex rgb|color name)
+                                                                - for image: path to image
+                                                            </xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+
+                                        <xs:element name="action" type="xs:string">
+                                            <xs:annotation>
+                                                <xs:appinfo>Action</xs:appinfo>
+                                                <xs:documentation>
+                                                    Java class that implements Action interface, located in src/actions
+                                                </xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!--util.State definition-->
+
+                <xs:element name="update">
+                    <xs:complexType>
+                        <xs:annotation>
+                            <xs:appinfo>Initial update</xs:appinfo>
+                        </xs:annotation>
+
+                        <xs:sequence>
+                            <xs:element name="type">
+                                <xs:simpleType>
+                                    <xs:annotation>
+                                        <xs:appinfo>State type</xs:appinfo>
+                                        <xs:documentation>
+                                            Defines initial update type
+                                            - random: cells will be generated in random locations, according to
+                                            "distribution"
+                                            - grid: cells will be generated according to "grid"
+                                            -----------
+                                            - if grid: "grid" must be defined
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                    <xs:restriction>
+                                        <xs:enumeration value="RANDOM"/>
+                                        <xs:enumeration value="GRID"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+
+                            <xs:element name="grid" type="xs:string">
+                                <xs:annotation>
+                                    <xs:appinfo>Grid</xs:appinfo>
+                                    <xs:documentation>
+                                        Defines a grid of cells
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+
+                            <xs:element name="distribution">
+                                <xs:complexType>
+                                    <xs:annotation>
+                                        <xs:appinfo>Cell Distribution</xs:appinfo>
+                                        <xs:documentation>
+                                            Defines weight distribution of cells
+
+                                            All the values will be considered as relative to total
+
+                                            Any cell not present here will be receive weight of 0
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                    <xs:sequence>
+                                        <xs:element name="weight">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                    <xs:restriction base="xs:float">
+                                                        <xs:attribute name="cell" use="required">
+                                                            <xs:simpleType>
+                                                                <xs:restriction>
+                                                                    <xs:length fixed="true" value="1"/>
+                                                                </xs:restriction>
+                                                            </xs:simpleType>
+                                                        </xs:attribute>
+                                                    </xs:restriction>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+
+                            <xs:element name="screen-width" type="xs:int" default="400" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:appinfo>Width</xs:appinfo>
+                                    <xs:documentation>
+                                        Screen width in pixels
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+
+                            <xs:element name="screen-height" type="xs:int" default="400" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:appinfo>Width</xs:appinfo>
+                                    <xs:documentation>
+                                        Screen height in pixels
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+
+                            <xs:element name="square" type="xs:boolean" default="true" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:appinfo>Square</xs:appinfo>
+                                    <xs:documentation>
+                                        Square or Rectangle
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+
+                            <xs:element name="max-rows" type="xs:int" default="20" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:appinfo>Width</xs:appinfo>
+                                    <xs:documentation>
+                                        Maximum number of rows
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+
+                            <xs:element name="max-cols" type="xs:int" default="20" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:appinfo>Width</xs:appinfo>
+                                    <xs:documentation>
+                                        Maximum number of columns
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

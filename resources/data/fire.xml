@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Society.xsd">
+    <time-unit>
+        seconds
+    </time-unit>
+    <cells>
+        <cell>
+            <symbol>E</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>yellow</content>
+            </fill>
+            <action>fire.Spread</action>
+        </cell>
+        <cell>
+            <symbol>T</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>green</content>
+            </fill>
+            <action>fire.Spread</action>
+        </cell>
+        <cell>
+            <symbol>B</symbol>
+            <fill>
+                <type>COLOR</type>
+                <content>red</content>
+            </fill>
+            <action>fire.Spread</action>
+        </cell>
+    </cells>
+    <state>
+        <type>RANDOM</type>
+        <distribution>
+            <weight cell="E">.03</weight>
+            <weight cell="T">.96</weight>
+            <weight cell="B">.01</weight>
+        </distribution>
+    </state>
+
+</game>
